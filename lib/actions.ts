@@ -1,5 +1,7 @@
 "use server";
+
 // https://ruizdelcarmen.me/
+
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
@@ -166,6 +168,52 @@ export async function createStakeProject(
         };
       }
     }
+    throw e;
+  }
+}
+
+export async function uplaodCertificate(
+  prevState: unknown,
+  formData: FormData,
+  imageUrl: string
+) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    return redirect("/api/auth/login");
+  }
+  console.log();
+
+  const name = formData.get("name") as string;
+  const post_link = formData.get("post_link") as string;
+  // const bio = formData.get("bio") as string;
+  // const imageUrl = formData.get("imageUrl") as string;
+
+  try {
+    await prisma.certificates.create({
+      data: {
+        userId: user.id,
+        name: name,
+        imageUrl: imageUrl,
+        link: post_link,
+      },
+    });
+
+    return {
+      message: "Succesfully Updated",
+      status: "green",
+    };
+  } catch (e) {
+    // if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    //   if (e.code === "P2002") {
+    //     return {
+    //       message: "This username is already used",
+    //       status: "error",
+    //     };
+    //   }
+    // }
+    console.log(e);
     throw e;
   }
 }

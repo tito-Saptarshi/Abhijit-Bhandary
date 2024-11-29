@@ -33,6 +33,7 @@ model User {
 
   project            Project[]
   stakeholderProject StakeholderProject[]
+  certificates       Certificates[]
 }
 
 model Project {
@@ -63,4 +64,14 @@ model StakeholderProject {
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
+}
+
+model Certificates {
+  id       String  @id @default(uuid())
+  name     String
+  link     String
+  imageUrl String?
+  
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
 }

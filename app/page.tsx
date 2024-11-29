@@ -1,5 +1,6 @@
 import prisma from "@/app/lib/db";
 import PersonalProjects from "@/components/AllProjects";
+import { CertificationsPage } from "@/components/Certificates";
 // import PersonalProjects from "@/components/AllProjects";
 import { Hero } from "@/components/Hero";
 import StakeProjects from "@/components/StakeProjects";
@@ -41,6 +42,7 @@ export default async function Home() {
       <Hero user={user} admin={admin} />
       <StakeProjects username={user?.userName || ""}/>
       <PersonalProjects username={user?.userName || ""}/>
+      <CertificationsPage username={user?.userName || ""}/>
     </div>
   );
 }
