@@ -82,6 +82,7 @@ export async function createProject(
   const project_link = formData.get("project_link") as string;
   const other_link = formData.get("other_link") as string;
   const github_link = formData.get("github_link") as string;
+  const other_type = formData.get("other_type") as string;
   // const bio = formData.get("bio") as string;
   // const imageUrl = formData.get("imageUrl") as string;
 
@@ -97,6 +98,7 @@ export async function createProject(
         github_link: github_link,
         imageUrl: imageUrl,
         details: pitch,
+        only_type: other_type,
       },
     });
 
@@ -137,6 +139,7 @@ export async function createStakeProject(
   const project_link = formData.get("project_link") as string;
   const other_link = formData.get("other_link") as string;
   const github_link = formData.get("github_link") as string;
+  const other_type =  formData.get("other_type") as string;
   // const bio = formData.get("bio") as string;
   // const imageUrl = formData.get("imageUrl") as string;
 
@@ -152,6 +155,7 @@ export async function createStakeProject(
         github_link: github_link,
         imageUrl: imageUrl,
         details: pitch,
+        only_type: other_type,
       },
     });
 
@@ -197,6 +201,48 @@ export async function uplaodCertificate(
         name: name,
         imageUrl: imageUrl,
         link: post_link,
+      },
+    });
+
+    return {
+      message: "Succesfully Updated",
+      status: "green",
+    };
+  } catch (e) {
+    // if (e instanceof Prisma.PrismaClientKnownRequestError) {
+    //   if (e.code === "P2002") {
+    //     return {
+    //       message: "This username is already used",
+    //       status: "error",
+    //     };
+    //   }
+    // }
+    console.log(e);
+    throw e;
+  }
+}
+
+export async function sendText(
+  prevState: unknown,
+  formData: FormData,
+) {
+
+  const id = formData.get("userId") as string;
+  const mail = formData.get("mail") as string;
+  const text = formData.get("text") as string;
+  
+  console.log("userId: " + id);
+  console.log("mail: " + mail);
+  console.log("text: " + text);
+  
+
+
+  try {
+    await prisma.inbox.create({
+      data: {
+       userId: id,
+       mail: mail,
+       text: text,
       },
     });
 

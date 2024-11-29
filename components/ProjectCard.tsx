@@ -14,19 +14,27 @@ import {
   interface ProjectCardProps {
     project: Project;
     username: string;
+    type: string;
   }
   
-  export function ProjectCard({ project, username }: ProjectCardProps) {
+  export function ProjectCard({ project, username, type }: ProjectCardProps) {
     let tools_used;
     if (project.tools_used) {
       tools_used = extractWords(project.tools_used);
     }
-  
+    let projectPath;
+    if(type === "stake"){
+      projectPath = "stakeholder";
+    } else {
+      projectPath = "project";
+    }
+
+
     // const projectLink = project.project_link || "/";
   
     return (
       <Link
-        href={`/project/${project.id}`}
+        href={`/${projectPath}/${project.id}`}
         rel="noopener noreferrer"
         className="block"
       >

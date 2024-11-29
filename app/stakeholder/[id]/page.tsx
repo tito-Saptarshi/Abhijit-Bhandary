@@ -14,7 +14,7 @@ const md = markdownit();
 
 async function getData(id: string) {
   noStore();
-  const data = await prisma.project.findUnique({
+  const data = await prisma.stakeholderProject.findUnique({
     where: {
       id: id,
     },
@@ -34,7 +34,7 @@ async function getUserData(id: string) {
   return data;
 }
 
-export default async function Prid({ params }: { params: { id: string } }) {
+export default async function page({ params }: { params: { id: string } }) {
   const data = await getData(params.id);
   if (!data) return redirect("/");
 

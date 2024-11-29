@@ -31,6 +31,7 @@ const formSchema = z.object({
   skills: z.string().min(2, "Skills must be at least 2 characters"),
   tools_used: z.string().min(2, "Skills must be at least 2 characters"),
   project_type: z.string().min(2, "Skills must be at least 2 characters"),
+  other_type: z.string().min(2, "Skills must be at least 2 characters"),
   project_link : z.string().min(2, "Project name must be at least 2 characters"),
   github_link : z.string().min(2, "Project name must be at least 2 characters"),
   image: z.string().url("Invalid image URL"),
@@ -56,6 +57,7 @@ export default function ProjectUploadPage() {
       other_link: "",
       description: "",
       image: "",
+      other_type: "",
     },
   });
 
@@ -151,6 +153,22 @@ export default function ProjectUploadPage() {
                   </FormItem>
                 )}
               />
+               <FormField
+              control={form.control}
+              name="other_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Other Type <span className="text-muted-foreground">(Optional)</span></FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Personal, Stakeholder, etc..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
               <FormField
                 control={form.control}
                 name="project_link"

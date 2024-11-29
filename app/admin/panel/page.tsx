@@ -22,7 +22,10 @@ export default function SimpleAdminPage() {
             <Link href={"/admin/createStake"}>Create Stakeholder Project</Link>
           </Button>
           <Button className="w-full" size="lg">
-            View Messages
+            <Link href={"/admin/upload-certificate"}>Upload Certificate</Link>
+          </Button>
+          <Button className="w-full" size="lg">
+            <Link href={"/admin/viewtext"}>View Messages</Link>
           </Button>
         </CardContent>
       </Card>

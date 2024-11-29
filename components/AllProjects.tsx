@@ -27,17 +27,17 @@ async function getProjects(id: string) {
   return data;
 }
 
-export default async function PersonalProjects({ username }: { username: string }) {
+export default async function PersonalProjects({ username, type }: { username: string; type: string }) {
   const data = await getData(username);
   const projects = await getProjects(data?.id || "");
-
+  
   return (
     <section className="container mx-auto px-6 sm:px-8 lg:px-12 py-16">
       <h1 className="mb-10 text-4xl font-bold text-center text-gray-800">Personal Projects</h1>
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-3">
         {projects.map((project) => (
           
-          <ProjectCard key={project.id} project={project} username={username}/>
+          <ProjectCard key={project.id} project={project} username={username} type={type}/>
          
         ))}
       </div>

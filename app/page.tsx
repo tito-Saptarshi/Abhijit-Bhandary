@@ -4,7 +4,7 @@ import { CertificationsPage } from "@/components/Certificates";
 // import PersonalProjects from "@/components/AllProjects";
 import { Hero } from "@/components/Hero";
 import StakeProjects from "@/components/StakeProjects";
-import { userDbName, userLoginId } from "@/lib/helper";
+import { userLoginId } from "@/lib/helper";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 import { unstable_noStore as noStore } from "next/cache";
@@ -20,29 +20,39 @@ async function getData(id: string) {
   return data;
 }
 
-export default async function Home() {
-  // const user = await getData(userDbName);
+async function getAdminData() {
+  noStore();
+  const data = await prisma.admin.findFirst({
+    where: {
+      order: 0,
+    },
+  });
 
-  // let admin = false;
-  // if(userLoginId === user?.id) {
-  //   admin=true;
-  // }
-  const { getUser } = getKindeServerSession();
-  const data = await getUser();
-  const user = await getData(userLoginId);
-  const logUser = await getData(data.id);
-  let admin = false;
-  if (logUser?.admin) {
-     admin = true;
-  }
-  console.log();
+  return data;
+}
+
+export default async function Home() {
+  const adminDetails = await getAdminData();
+  const user = await getData(adminDetails?.userId ?? "");
+  console.log("user: " + user);
   
+
+  // const { getUser } = getKindeServerSession();
+  // const kindeUser = await getUser();
+
+  // const allUser = await getData(kindeUser.id ?? "");
+  // console.log("alluser: " + allUser);
+  let admin = false;
+  if (user?.admin) {
+    admin = true;
+  }
+
   return (
     <div className="p-4">
       <Hero user={user} admin={admin} />
-      <StakeProjects username={user?.userName || ""}/>
-      <PersonalProjects username={user?.userName || ""}/>
-      <CertificationsPage username={user?.userName || ""}/>
+      <StakeProjects username={user?.userName || ""} type="stake" />
+      <PersonalProjects username={user?.userName || ""} type="personal" />
+      <CertificationsPage username={user?.userName || ""} />
     </div>
   );
 }

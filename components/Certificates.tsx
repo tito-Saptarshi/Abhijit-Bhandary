@@ -40,7 +40,7 @@ export async function CertificationsPage({ username }: { username: string }) {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold text-center mb-8">Certifications</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-3">
         {certificates.map((cert) => (
           <Card key={cert.id} className="overflow-hidden max-h-[300px]">
             <CardHeader>
@@ -83,8 +83,8 @@ export async function CertificationsPage({ username }: { username: string }) {
           </Card>
         ))}
       </div>
-
-      <ContactMe />
+     
+      <ContactMe userId={data?.id ?? ""}/>
     </div>
   );
 }
